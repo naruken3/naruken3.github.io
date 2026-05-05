@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>白玉ルーレット</title>
+<style>
+body {
+  font-family: sans-serif;
+  text-align: center;
+  background: #ffe4e1;
+  padding: 20px;
+}
+h1 {
+  font-size: 28px;
+}
+input {
+  width: 50%;
+  padding: 10px;
+  margin: 5px;
+  font-size: 16px;
+}
+button {
+  padding: 15px 30px;
+  font-size: 18px;
+  margin-top: 20px;
+}
+.result {
+  font-size: 28px;
+  margin-top: 30px;
+  font-weight: bold;
+}
+.container {
+  width: 600px;
+  margin: 0 auto;
+}
+.flower {
+  position: fixed;
+  font-size: 30px;
+  animation: fall 1s ease-out forwards;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-200px) scale(1.5);
+    opacity: 0;
+  }
+}
+.description {
+  font-size: 20px;
+  color: #555;
+  margin: 22px 0;
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🍡本日のラッキーあんこ🍡</h1>
+
+<p class="description">
+６つの味から運命の２本を導くラッキーあんこ。<br>
+（味は自由に書き換えることができるよ）<br>
+準備ができたら「咲かせる」ボタンを押してね。
+</p>
+
+<div id="inputs">
+  <input value="苺" placeholder="お花1"><br>
+  <input value="栗" placeholder="お花2"><br>
+  <input value="抹茶" placeholder="お花3"><br>
+  <input value="紫いも" placeholder="お花4"><br>
+  <input value="こしあん" placeholder="お花5"><br>
+  <input value="黒ごま" placeholder="お花6"><br>
+</div>
+
+<button onclick="startRoulette()">咲かせる</button>
+
+<div class="result" id="result">？？？</div>
+
+<script>
+function startRoulette() {
+  let inputs = document.querySelectorAll("input");
+  let items = [];
+
+  inputs.forEach(input => {
+    if (input.value.trim() !== "") {
+      items.push(input.value.trim());
+    }
+  });
+
+  if (items.length < 2) {
+    alert("2つ以上入力してください！");
+    return;
+  }
+
+  let resultDiv = document.getElementById("result");
+
+  let count = 0;
+  let interval = setInterval(() => {
+    let a = items[Math.floor(Math.random() * items.length)];
+    let b = items[Math.floor(Math.random() * items.length)];
+
+    while (a === b && items.length > 1) {
+      b = items[Math.floor(Math.random() * items.length)];
+    }
+
+    resultDiv.textContent = a + " ＆ " + b;
+    count++;
+
+    if (count > 15) {
+      clearInterval(interval);
+      showFlowers();
+    }
+  }, 100);
+}
+function showFlowers() {
+  for (let i = 0; i < 20; i++) {
+    let flower = document.createElement("div");
+    flower.className = "flower";
+    flower.textContent = "🌸";
+
+    flower.style.left = Math.random() * window.innerWidth + "px";
+    flower.style.top = Math.random() * window.innerHeight + "px";
+        
+    document.body.appendChild(flower);
+
+    setTimeout(() => flower.remove(), 1000);
+  }
+}
+</script>
+
+</div>
+</body>
+</html>
