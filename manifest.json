@@ -1,0 +1,8 @@
+{
+  "name": "ラッキーあんこ",
+  "short_name": "ラキあん",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f0dada",
+  "theme_color": "#f0dada"
+}
